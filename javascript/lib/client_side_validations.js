@@ -83,6 +83,18 @@ $.extend($.fn, {
         validate_options['options'] = { };
       }
       validate_options.options.ignore = ':hidden';
+
+      callback_option_names = ['submitHandler', 'invalidHandler', 'showErrors',
+            'errorPlacement', 'highlight', 'unhighlight']; // 'success' can also be String.
+      
+      // Evaluate the json strings for the validate options of type Callback.      
+      for(var option in validate_options) {
+        if ((jQuery.inArray(option, callback_option_names) >= 0)
+          || (option == 'success' && validate_options[option].match('^' + 'function'))) {
+            validate_options[option] = eval('(' + validate_options[option] + ')');
+        }
+      }
+
       form.validate(validate_options);
     }
   }
