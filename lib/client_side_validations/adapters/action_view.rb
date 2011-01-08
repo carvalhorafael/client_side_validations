@@ -82,7 +82,9 @@ module ClientSideValidations
             end
           end
           
-          validate_options['options']  = options unless options.empty?
+          options.each do |key, value|
+            validate_options[key] = value
+          end
           validate_options['data-csv'] = data_csv
           validate_options
         end
